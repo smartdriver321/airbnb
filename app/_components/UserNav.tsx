@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link'
 import { MenuIcon } from 'lucide-react'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import {
@@ -11,6 +12,7 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -37,6 +39,29 @@ export async function UserNav() {
 			<DropdownMenuContent className='w[1200px]' align='end'>
 				{user ? (
 					<>
+						<DropdownMenuItem>
+							<form action='' className='w-full'>
+								<button type='submit' className='w-full text-start'>
+									AirBnB your Home
+								</button>
+							</form>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href='/my-homes' className='w-full'>
+								My Listings
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href='/favorites' className='w-full'>
+								My Favorites
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href='/reservations' className='w-full'>
+								My Reservations
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
 						<DropdownMenuItem>
 							<LogoutLink className='w-full'>Logout</LogoutLink>
 						</DropdownMenuItem>
