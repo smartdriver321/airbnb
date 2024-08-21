@@ -1,3 +1,4 @@
+import { CreationBottomBar } from '@/app/_components/CreationBottomBar'
 import { SelectedCategory } from '@/app/_components/SelectedCategory'
 
 export default function Structure({ params }: { params: { id: string } }) {
@@ -12,6 +13,7 @@ export default function Structure({ params }: { params: { id: string } }) {
 			<form action=''>
 				<input type='hidden' name='homeId' value={params.id} />
 				<SelectedCategory />
+				<CreationBottomBar />
 			</form>
 		</>
 	)
