@@ -2,12 +2,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { useCountries } from '@/lib/getCountries'
+import { AddToFavoriteButton } from './SubmitButtons'
 
 interface iAppProps {
 	imagePath: string
 	description: string
 	location: string
 	price: number
+	userId: string | undefined
+	favoriteId: string
+	isInFavoriteList: boolean
+	homeId: string
 }
 
 export function ListingCard({
@@ -15,6 +20,10 @@ export function ListingCard({
 	description,
 	location,
 	price,
+	userId,
+	favoriteId,
+	isInFavoriteList,
+	homeId,
 }: iAppProps) {
 	const { getCountryByValue } = useCountries()
 	const country = getCountryByValue(location)
@@ -28,6 +37,24 @@ export function ListingCard({
 					fill
 					className='rounded-lg h-full object-cover'
 				/>
+
+				{userId && (
+					<div className='z-10 absolute top-2 right-2'>
+						{isInFavoriteList ? (
+							<form action=''>
+								<input type='hidden' name='favoriteId' value={favoriteId} />
+								<input type='hidden' name='userId' value={userId} />
+								DeleteFromFavoriteButton
+							</form>
+						) : (
+							<form action=''>
+								<input type='hidden' name='homeId' value={homeId} />
+								<input type='hidden' name='userId' value={userId} />
+								<AddToFavoriteButton />
+							</form>
+						)}
+					</div>
+				)}
 			</div>
 
 			<Link href={'/'} className='mt-2'>

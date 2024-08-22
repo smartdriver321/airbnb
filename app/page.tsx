@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 import prisma from '@/lib/db'
 import { NoItems } from './_components/NoItem'
@@ -7,8 +8,10 @@ import { MapFilterItems } from './_components/MapFilterItems'
 import { SkeletonCard } from './_components/SkeletonCard'
 
 async function getData({
+	userId,
 	searchParams,
 }: {
+	userId: string | undefined
 	searchParams?: {
 		filter?: string
 	}
@@ -26,6 +29,11 @@ async function getData({
 			description: true,
 			country: true,
 			price: true,
+			Favorite: {
+				where: {
+					userId: userId ?? undefined,
+				},
+			},
 		},
 	})
 
@@ -39,7 +47,9 @@ async function ShowItems({
 		filter?: string
 	}
 }) {
-	const data = await getData({ searchParams: searchParams })
+	const { getUser } = getKindeServerSession()
+	const user = await getUser()
+	const data = await getData({ searchParams: searchParams, userId: user?.id })
 
 	return (
 		<>
@@ -57,6 +67,10 @@ async function ShowItems({
 							description={item.description as string}
 							location={item.country as string}
 							price={item.price as number}
+							userId={user?.id}
+							favoriteId={item.Favorite[0]?.id}
+							isInFavoriteList={item.Favorite.length > 0 ? true : false}
+							homeId={item.id}
 						/>
 					))}
 				</div>
