@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { addToFavorite } from '../actions'
 import { useCountries } from '@/lib/getCountries'
 import { AddToFavoriteButton } from './SubmitButtons'
 
@@ -41,13 +42,11 @@ export function ListingCard({
 				{userId && (
 					<div className='z-10 absolute top-2 right-2'>
 						{isInFavoriteList ? (
-							<form action=''>
-								<input type='hidden' name='favoriteId' value={favoriteId} />
-								<input type='hidden' name='userId' value={userId} />
-								DeleteFromFavoriteButton
+							<form>
+								<AddToFavoriteButton />
 							</form>
 						) : (
-							<form action=''>
+							<form action={addToFavorite}>
 								<input type='hidden' name='homeId' value={homeId} />
 								<input type='hidden' name='userId' value={userId} />
 								<AddToFavoriteButton />
@@ -65,7 +64,7 @@ export function ListingCard({
 					{description}
 				</p>
 				<p className='pt-2 text-muted-foreground'>
-					<span className='font-medium text-black'>${price}</span> Night
+					<span className='font-medium text-black'>${price}</span>/night
 				</p>
 			</Link>
 		</div>
