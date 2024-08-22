@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
+import { createLocation } from '@/app/actions'
 import { useCountries } from '@/lib/getCountries'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -33,7 +34,7 @@ export default function Address({ params }: { params: { id: string } }) {
 				</h2>
 			</div>
 
-			<form action=''>
+			<form action={createLocation}>
 				<input type='hidden' name='homeId' value={params.id} />
 				<input type='hidden' name='countryValue' value={locationValue} />
 				<div className='w-3/5 mx-auto mb-36'>
