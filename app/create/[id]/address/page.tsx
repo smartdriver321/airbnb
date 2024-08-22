@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { createLocation } from '@/app/actions'
 import { useCountries } from '@/lib/getCountries'
+import { CreationBottomBar } from '@/app/_components/CreationBottomBar'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
 	Select,
@@ -58,6 +59,7 @@ export default function Address({ params }: { params: { id: string } }) {
 					</div>
 					<LazyMap locationValue={locationValue} />
 				</div>
+				<CreationBottomBar />
 			</form>
 		</>
 	)
