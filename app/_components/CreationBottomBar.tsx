@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { CreationSubmit } from '@/app/_components/SubmitButtons'
 import { Button } from '@/components/ui/button'
 
 export function CreationBottomBar() {
@@ -9,6 +10,7 @@ export function CreationBottomBar() {
 				<Button variant='secondary' size='lg' asChild>
 					<Link href='/'>Cancel</Link>
 				</Button>
+				<CreationSubmit />
 			</div>
 		</div>
 	)
