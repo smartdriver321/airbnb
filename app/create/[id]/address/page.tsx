@@ -1,8 +1,10 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { useCountries } from '@/lib/getCountries'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
 	Select,
 	SelectContent,
@@ -17,6 +19,11 @@ export default function Address({ params }: { params: { id: string } }) {
 	const [locationValue, setLocationValue] = useState('')
 
 	const { getAllCountries } = useCountries()
+
+	const LazyMap = dynamic(() => import('@/app/_components/Map'), {
+		ssr: false,
+		loading: () => <Skeleton className='h-[50vh] w-full' />,
+	})
 
 	return (
 		<>
@@ -35,6 +42,7 @@ export default function Address({ params }: { params: { id: string } }) {
 							<SelectTrigger className='w-full'>
 								<SelectValue placeholder='Select a Country' />
 							</SelectTrigger>
+
 							<SelectContent>
 								<SelectGroup>
 									<SelectLabel>Countries</SelectLabel>
@@ -47,6 +55,7 @@ export default function Address({ params }: { params: { id: string } }) {
 							</SelectContent>
 						</Select>
 					</div>
+					<LazyMap locationValue={locationValue} />
 				</div>
 			</form>
 		</>
