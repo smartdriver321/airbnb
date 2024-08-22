@@ -1,4 +1,5 @@
 import { Counter } from '@/app/_components/Counter'
+import { CreationBottomBar } from '@/app/_components/CreationBottomBar'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -85,6 +86,8 @@ export default function Description({ params }: { params: { id: string } }) {
 						</CardHeader>
 					</Card>
 				</div>
+
+				<CreationBottomBar />
 			</form>
 		</>
 	)
