@@ -2,8 +2,9 @@
 import Image from 'next/image'
 
 import prisma from '@/lib/db'
-import { Separator } from '@/components/ui/separator'
 import { useCountries } from '@/lib/getCountries'
+import { CategoryShowcase } from '@/app/_components/CategoryShowcase'
+import { Separator } from '@/components/ui/separator'
 
 async function getData(homeid: string) {
 	const data = await prisma.home.findUnique({
@@ -79,6 +80,10 @@ export default async function HomeDetails({
 					</div>
 
 					<Separator className='my-7' />
+					<CategoryShowcase categoryName={data?.categoryName as string} />
+
+					<Separator className='my-7' />
+					<p className='text-muted-foreground'>{data?.description}</p>
 				</div>
 			</div>
 		</div>
