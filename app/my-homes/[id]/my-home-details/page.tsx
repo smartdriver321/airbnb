@@ -1,11 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image'
+import Link from 'next/link'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
+import { createReservation } from '@/app/actions'
 import prisma from '@/lib/db'
 import { useCountries } from '@/lib/getCountries'
 import { CategoryShowcase } from '@/app/_components/CategoryShowcase'
 import { HomeMap } from '@/app/_components/HomeMap'
 import { SelectCalender } from '@/app/_components/SelectCalender'
+import { ReservationSubmitButton } from '@/app/_components/SubmitButtons'
+import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 async function getData(homeid: string) {
@@ -29,6 +34,11 @@ async function getData(homeid: string) {
 					firstName: true,
 				},
 			},
+			Reservation: {
+				where: {
+					homeId: homeid,
+				},
+			},
 		},
 	})
 
@@ -43,6 +53,8 @@ export default async function HomeDetails({
 	const data = await getData(params.id)
 	const { getCountryByValue } = useCountries()
 	const country = getCountryByValue(data?.country as string)
+	const { getUser } = getKindeServerSession()
+	const user = await getUser()
 
 	return (
 		<div className='w-[75%] mx-auto mt-10 mb-12'>
@@ -90,7 +102,20 @@ export default async function HomeDetails({
 					<Separator className='my-7' />
 					<HomeMap locationValue={country?.value as string} />
 				</div>
-				<SelectCalender />
+				<form action={createReservation}>
+					<input type='hidden' name='homeId' value={params.id} />
+					<input type='hidden' name='userId' value={user?.id} />
+
+					<SelectCalender reservation={data?.Reservation} />
+
+					{user?.id ? (
+						<ReservationSubmitButton />
+					) : (
+						<Button className='w-full' asChild>
+							<Link href='/api/auth/login'>Make a Reservation</Link>
+						</Button>
+					)}
+				</form>
 			</div>
 		</div>
 	)
