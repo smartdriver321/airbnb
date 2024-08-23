@@ -62,7 +62,7 @@ export function ListingCard({
 				)}
 			</div>
 
-			<Link href={'/'} className='mt-2'>
+			<Link href={`my-homes/${homeId}/my-home-details`} className='mt-2'>
 				<h3 className='font-medium text-base'>
 					{country?.flag} {country?.label} / {country?.region}
 				</h3>
@@ -70,7 +70,7 @@ export function ListingCard({
 					{description}
 				</p>
 				<p className='pt-2 text-muted-foreground'>
-					<span className='font-medium text-black'>${price}</span>/night
+					<span className='font-medium text-black'>${price}</span> per night
 				</p>
 			</Link>
 		</div>
