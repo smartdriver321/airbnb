@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image'
 import Link from 'next/link'
+import { unstable_noStore as noStore } from 'next/cache'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 import { createReservation } from '@/app/actions'
@@ -14,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 async function getData(homeid: string) {
+	noStore()
 	const data = await prisma.home.findUnique({
 		where: {
 			id: homeid,
