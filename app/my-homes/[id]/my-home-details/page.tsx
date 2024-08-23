@@ -4,6 +4,7 @@ import Image from 'next/image'
 import prisma from '@/lib/db'
 import { useCountries } from '@/lib/getCountries'
 import { CategoryShowcase } from '@/app/_components/CategoryShowcase'
+import { HomeMap } from '@/app/_components/HomeMap'
 import { Separator } from '@/components/ui/separator'
 
 async function getData(homeid: string) {
@@ -84,6 +85,9 @@ export default async function HomeDetails({
 
 					<Separator className='my-7' />
 					<p className='text-muted-foreground'>{data?.description}</p>
+
+					<Separator className='my-7' />
+					<HomeMap locationValue={country?.value as string} />
 				</div>
 			</div>
 		</div>
